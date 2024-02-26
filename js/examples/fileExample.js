@@ -5,7 +5,7 @@ const fsPromise = require("node:fs/promises");
 //for dealing with file path
 const path = require("path");
 
-let filePath = path.resolve(__dirname, `../data/test.txt`);
+let filePath = path.resolve(__dirname, `../../data/test.txt`);
 
 function writeFileExample() {
   const content = "Example content";
@@ -86,13 +86,17 @@ async function readFileWithPromisesExample() {
   }
 }
 
-module.exports = {
-  writeFileExample,
-  writeFileSynchronouslyExample,
-  writeFileWithPromisesExample,
-  appendFileExample,
-  appendFileWithPromiseExample,
-  readFileExample,
-  readFileSynchronouslyExample,
-  readFileWithPromisesExample,
-};
+function deleteFileExample() {
+  fs.unlink(filePath, function (err) {
+    if (err) throw err;
+    console.log("File deleted!");
+  });
+}
+
+function renameFile() {
+  let newPath = path.resolve(__dirname, `../../data/test2.txt`);
+  fs.rename(filePath, newPath, function (err) {
+    if (err) throw err;
+    console.log("File Renamed!");
+  });
+}

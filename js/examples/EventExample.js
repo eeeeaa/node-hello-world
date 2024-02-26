@@ -28,8 +28,3 @@ function startEventListener() {
 function emitStartEvent() {
   eventEmitter.emit("start", 1, 100);
 }
-
-module.exports = {
-  setupListener,
-  emitStartEvent,
-};

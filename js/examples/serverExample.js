@@ -1,5 +1,6 @@
 //for http stuff like creating server
 const http = require("node:http");
+const date = require("../date.js");
 
 //external library for handling api request/response
 const axios = require("axios");
@@ -35,10 +36,16 @@ function serverExample() {
   const port = process.env.PORT;
 
   const server = http.createServer((req, res) => {
+    const url = new URL(req.url, `http://${req.headers.host}`);
     //response to send
     res.statusCode = 200;
     res.setHeader("Content-Type", "text/plain");
-    res.end("Hello World\n");
+    res.write("Hello World\n");
+    res.write(`${url.pathname}\n`);
+    res.write(
+      `${url.searchParams.get("year")} ${url.searchParams.get("month")}\n`
+    );
+    res.end("The date and time are currently: " + date.myDateTime());
   });
 
   //use Ctrl + C to stop server
@@ -46,9 +53,3 @@ function serverExample() {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
 }
-
-module.exports = {
-  httpGetExample,
-  httpPostExample,
-  serverExample,
-};
